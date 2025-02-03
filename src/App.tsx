@@ -1,0 +1,55 @@
+import { useState, useEffect } from "react";
+import "./App.css";
+
+function App() {
+  const [words, setWords] = useState<string[]>([]);
+  const [err, setErr] = useState<string>("");
+  const [wordCtr, setWordCtr] = useState<number>(0);
+  const MAX_WORDS = 10;
+
+  const generateClickHandler = () => {
+    if (wordCtr + 1 >= MAX_WORDS) {
+      console.log("Word limit reached.");
+      setWordCtr(0);
+      setWords([]);
+      // return;
+    }
+    
+    for (let i = 0; i < MAX_WORDS; i++) {
+      setTimeout(() => {
+        fetchRandWord();
+      }, i * 100);
+    }
+  };
+
+  async function fetchRandWord(): Promise<void> {
+    try {
+      const response = await fetch(
+        "https://random-word-api.vercel.app/api?words=1"
+      );
+      if (!response.ok) throw new Error("Error fetching from API.");
+
+      const word: string = await response.json();
+      const newWord = word[0] + " ";
+      setWords((prevWords) => [...prevWords, newWord]);
+      setWordCtr((prevCtr) => prevCtr + 1);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setErr(`Error: ${err.message}`);
+      }
+    }
+  }
+
+  useEffect(() => {
+    console.log(`${wordCtr}`);
+  }, [wordCtr]);
+
+  return (
+    <div className="main-content">
+      <button onClick={generateClickHandler}>Fetch random words</button>
+      {words}
+    </div>
+  );
+}
+
+export default App;
