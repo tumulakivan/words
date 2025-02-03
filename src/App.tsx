@@ -3,9 +3,11 @@ import "./App.css";
 
 function App() {
   const [words, setWords] = useState<string[]>([]);
+  //const [tempWords, setTemp] = useState<string[]>([]);
   const [err, setErr] = useState<string>("");
   const [wordCtr, setWordCtr] = useState<number>(0);
   const MAX_WORDS = 10;
+  let i = 0;
 
   const generateClickHandler = () => {
     if (wordCtr + 1 >= MAX_WORDS) {
@@ -30,7 +32,8 @@ function App() {
 
       const word: string = await response.json();
       const newWord = word[0] + " ";
-      setWords((prevWords) => [...prevWords, newWord]);
+      // setTemp((prevTemp) => [...prevTemp, newWord]);
+      setWords((prevWords) => [newWord, ...prevWords]);
       setWordCtr((prevCtr) => prevCtr + 1);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -40,8 +43,8 @@ function App() {
   }
 
   useEffect(() => {
-    console.log(`${wordCtr}`);
-  }, [wordCtr]);
+    if(wordCtr != 0) console.log(`${wordCtr} - ${words[0]}`);
+  }, [wordCtr, words]);
 
   return (
     <div className="main-wrapper">
