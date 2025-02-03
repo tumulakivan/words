@@ -7,7 +7,6 @@ function App() {
   const [err, setErr] = useState<string>("");
   const [wordCtr, setWordCtr] = useState<number>(0);
   const MAX_WORDS = 10;
-  let i = 0;
 
   const generateClickHandler = () => {
     if (wordCtr + 1 >= MAX_WORDS) {
