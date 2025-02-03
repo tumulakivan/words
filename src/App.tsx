@@ -10,7 +10,7 @@ function App() {
 
   const generateClickHandler = () => {
     if (wordCtr + 1 >= MAX_WORDS) {
-      console.log("Word limit reached.");
+      console.log("Word limit reached. Clearing word bank.");
       setWordCtr(0);
       setWords([]);
     }
