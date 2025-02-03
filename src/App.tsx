@@ -12,7 +12,6 @@ function App() {
       console.log("Word limit reached.");
       setWordCtr(0);
       setWords([]);
-      // return;
     }
     
     for (let i = 0; i < MAX_WORDS; i++) {
@@ -45,9 +44,13 @@ function App() {
   }, [wordCtr]);
 
   return (
-    <div className="main-content">
-      <button onClick={generateClickHandler}>Fetch random words</button>
-      {words}
+    <div className="main-wrapper">
+      <div className="main-content">
+        <button onClick={generateClickHandler}>Fetch random words</button>
+      </div>
+      <div className="word-container">
+        {words}
+      </div>
     </div>
   );
 }
